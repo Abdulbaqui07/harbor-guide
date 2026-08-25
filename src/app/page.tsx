@@ -17,7 +17,7 @@ const apps = [
     body: "The tutorial platform. It walks a brand-new user from a browser search all the way through their first completed request, highlighting each control as they go.",
     flow: ["Discover", "Search results", "Land", "Guided steps", "Verified"],
     cta: "Start the walkthrough",
-    ready: false,
+    ready: true,
   },
 ];
 
@@ -25,7 +25,7 @@ const milestones = [
   { label: "Scaffold & hosting", done: true },
   { label: "Portal flow", done: true },
   { label: "Tutorial engine", done: true },
-  { label: "Search discovery", done: false },
+  { label: "Search discovery", done: true },
   { label: "AI step authoring", done: false },
 ];
 
