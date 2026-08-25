@@ -110,6 +110,9 @@ export function useTutorialState() {
       writeState({ slug, index: nextIndex });
       void fetch("/api/tutorials/progress", {
         method: "POST",
+        // Steps usually advance as the page navigates away; keepalive lets the
+        // browser finish the request instead of cancelling it in flight.
+        keepalive: true,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userKey: visitorId(),

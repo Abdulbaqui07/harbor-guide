@@ -90,7 +90,7 @@
       {
         "id": "requests-panel",
         "tag": "section",
-        "text": "Your recent requestsMSKU7482913Gate ReleaseSubmittedMSKU7482"
+        "text": "Your recent requestsMSKU7482913Gate ReleaseSubmittedFind a c"
       },
       {
         "id": "dashboard-find-container",
@@ -265,7 +265,7 @@
     ]
   },
   "request-confirmation": {
-    "url": "https://harbor-guide.vercel.app/requests/REQ-Q0XFCN",
+    "url": "https://harbor-guide.vercel.app/requests/REQ-N4T5HS",
     "elements": [
       {
         "id": "portal-header",

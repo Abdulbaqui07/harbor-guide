@@ -90,9 +90,15 @@ try {
 
   // Progress must have been written server-side.
   const visitor = await page.evaluate(() => localStorage.getItem("harbor_visitor"));
-  const progress = await fetch(
-    `${BASE}/api/tutorials/progress?userKey=${visitor}&slug=${SLUG}`,
-  ).then((r) => r.json());
+  // Progress is written fire-and-forget, so poll instead of reading once.
+  let progress = {};
+  for (let i = 0; i < 20; i++) {
+    progress = await fetch(
+      `${BASE}/api/tutorials/progress?userKey=${visitor}&slug=${SLUG}`,
+    ).then((r) => r.json());
+    if (progress.current_step === steps.length && progress.completed_at) break;
+    await new Promise((r) => setTimeout(r, 500));
+  }
   check(
     "progress persisted to Postgres",
     progress.current_step === steps.length && !!progress.completed_at,
