@@ -46,6 +46,8 @@ export type InventoryElement = {
   text: string;
   /** Only rendered in certain states — e.g. Create request hides when a container has holds. */
   conditional?: boolean;
+  /** For <select>, the visible option labels a step may expect. */
+  options?: string[];
 };
 export type Inventory = Record<string, { url: string; elements: InventoryElement[] }>;
 

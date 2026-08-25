@@ -15,6 +15,15 @@ async function snapshot(page, label) {
       id: el.getAttribute("data-tutorial-id"),
       tag: el.tagName.toLowerCase(),
       text: (el.textContent ?? "").trim().slice(0, 60),
+      // Selects need their real choices listed, or a generator can only guess
+      // at labels and produce an expectedValue nothing will ever match.
+      ...(el instanceof HTMLSelectElement
+        ? {
+            options: [...el.querySelectorAll("option")].map((o) =>
+              (o.textContent ?? "").trim(),
+            ),
+          }
+        : {}),
     })),
   );
 

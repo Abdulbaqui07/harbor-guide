@@ -37,8 +37,8 @@ Hard rules:
 - A "click" step must target something clickable. An "input" or "select" step
   must target a field. Use "observe" to explain something without requiring an
   action.
-- A "select" step MUST set expectedValue to the exact option the user should
-  choose. Never leave it null.
+- A "select" step MUST set expectedValue to one of the option labels listed for
+  that element, copied exactly. Never leave it null and never invent a label.
 - Elements marked "conditional" are only rendered in certain states. Do not
   reference one unless earlier steps have actually navigated the user into the
   state where it appears. Describing something the user cannot see on screen is
@@ -97,6 +97,7 @@ export async function generateTutorial(goal: string): Promise<GenerationResult> 
             tag: e.tag,
             label: e.text,
             ...(e.conditional ? { conditional: true } : {}),
+            ...(e.options ? { options: e.options } : {}),
           })),
         ]),
       ),

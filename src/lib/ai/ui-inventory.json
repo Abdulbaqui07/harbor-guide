@@ -166,12 +166,29 @@
         "id": "search-status",
         "tag": "select",
         "text": "Any statusGate Out ReadyIn YardOn HoldDischargedLoaded",
+        "options": [
+          "Any status",
+          "Gate Out Ready",
+          "In Yard",
+          "On Hold",
+          "Discharged",
+          "Loaded"
+        ],
         "conditional": false
       },
       {
         "id": "search-line",
         "tag": "select",
         "text": "Any lineCMA CGMEvergreenHapag-LloydMSCMaerskOOCL",
+        "options": [
+          "Any line",
+          "CMA CGM",
+          "Evergreen",
+          "Hapag-Lloyd",
+          "MSC",
+          "Maersk",
+          "OOCL"
+        ],
         "conditional": false
       },
       {
@@ -296,6 +313,12 @@
         "id": "request-type",
         "tag": "select",
         "text": "Gate ReleaseReefer Plug-inCustoms InspectionReweigh",
+        "options": [
+          "Gate Release",
+          "Reefer Plug-in",
+          "Customs Inspection",
+          "Reweigh"
+        ],
         "conditional": false
       },
       {
@@ -325,7 +348,7 @@
     ]
   },
   "request-confirmation": {
-    "url": "http://localhost:3210/requests/REQ-K0MJHA",
+    "url": "http://localhost:3210/requests/REQ-O6VKWJ",
     "elements": [
       {
         "id": "portal-header",

@@ -49,8 +49,34 @@ let reached = 0;
 let stalledAt = null;
 let stallReason = "";
 
+// A tutorial need not begin at sign-in, so enter the app at whatever page its
+// first step belongs to — otherwise the harness reports a failure it caused.
+const PAGE_PATHS = {
+  login: "/login",
+  dashboard: "/dashboard",
+  search: "/search",
+  "container-detail": "/containers/MSKU7482913",
+  "new-request": "/requests/new?container=MSKU7482913",
+  "request-confirmation": "/requests",
+  requests: "/requests",
+};
+
 try {
-  await page.goto(`${BASE}/login?tutorial=${SLUG}`, { waitUntil: "domcontentloaded" });
+  const first = tutorial.steps[0];
+  const entry = PAGE_PATHS[first.page] ?? "/login";
+
+  if (first.page !== "login") {
+    await page.goto(`${BASE}/login`, { waitUntil: "domcontentloaded" });
+    await page.fill(sel("login-email"), SAMPLE["login-email"]);
+    await page.fill(sel("login-password"), SAMPLE["login-password"]);
+    await page.click(sel("login-submit"));
+    await page.waitForURL("**/dashboard", { timeout: 15000 });
+  }
+
+  const join = entry.includes("?") ? "&" : "?";
+  await page.goto(`${BASE}${entry}${join}tutorial=${SLUG}`, {
+    waitUntil: "domcontentloaded",
+  });
 
   for (let i = 0; i < tutorial.steps.length; i++) {
     const step = tutorial.steps[i];

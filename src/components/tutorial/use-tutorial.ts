@@ -187,9 +187,19 @@ export function isStepSatisfied(step: Step): boolean {
   if (!el) return false;
 
   const value = (el.value ?? "").trim();
+
   if (step.expectedValue) {
-    return value.toLowerCase() === step.expectedValue.trim().toLowerCase();
+    const want = step.expectedValue.trim().toLowerCase();
+    if (value.toLowerCase() === want) return true;
+    // A <select>'s value is rarely what the user sees, so match the visible
+    // option label too — that is what a step author would naturally write.
+    if (el instanceof HTMLSelectElement) {
+      const label = el.selectedOptions[0]?.textContent?.trim().toLowerCase();
+      if (label === want) return true;
+    }
+    return false;
   }
+
   return value.length >= 2;
 }
 
