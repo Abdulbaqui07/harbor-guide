@@ -49,7 +49,7 @@ export type InventoryElement = {
   /** For <select>, the visible option labels a step may expect. */
   options?: string[];
 };
-export type Inventory = Record<string, { url: string; elements: InventoryElement[] }>;
+export type Inventory = Record<string, { elements: InventoryElement[] }>;
 
 export type ValidationIssue = {
   index: number;

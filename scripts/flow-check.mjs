@@ -14,7 +14,13 @@ async function snapshot(page, label) {
     els.map((el) => ({
       id: el.getAttribute("data-tutorial-id"),
       tag: el.tagName.toLowerCase(),
-      text: (el.textContent ?? "").trim().slice(0, 60),
+      // Containers wrap live data, so their text changes with the database.
+      // Only keep labels from elements that own their own words.
+      text: ["button", "a", "label", "input", "select", "option"].includes(
+        el.tagName.toLowerCase(),
+      )
+        ? (el.textContent ?? "").trim().slice(0, 60)
+        : "",
       // Selects need their real choices listed, or a generator can only guess
       // at labels and produce an expectedValue nothing will ever match.
       ...(el instanceof HTMLSelectElement
@@ -39,8 +45,7 @@ async function snapshot(page, label) {
     // The same page renders different controls depending on state (a held
     // container hides Create request and shows Blocked by holds instead), so
     // merge across visits and count how often each element actually appeared.
-    const entry = (inventory[key] ??= { url: page.url(), visits: 0, elements: [] });
-    entry.url = page.url();
+    const entry = (inventory[key] ??= { visits: 0, elements: [] });
     entry.visits += 1;
     for (const el of ids) {
       const found = entry.elements.find((e) => e.id === el.id);
