@@ -1,6 +1,6 @@
 {
   "login": {
-    "url": "http://localhost:3210/login",
+    "url": "https://harbor-guide.vercel.app/login",
     "elements": [
       {
         "id": "login-form",
@@ -25,7 +25,7 @@
     ]
   },
   "dashboard": {
-    "url": "http://localhost:3210/dashboard",
+    "url": "https://harbor-guide.vercel.app/dashboard",
     "elements": [
       {
         "id": "portal-header",
@@ -90,7 +90,7 @@
       {
         "id": "requests-panel",
         "tag": "section",
-        "text": "Your recent requestsMSKU7482913Gate ReleaseSubmittedFind a c"
+        "text": "Your recent requestsMSKU7482913Gate ReleaseSubmittedMSKU7482"
       },
       {
         "id": "dashboard-find-container",
@@ -100,7 +100,7 @@
     ]
   },
   "search": {
-    "url": "http://localhost:3210/search?q=MSKU7482913&status=all&line=all",
+    "url": "https://harbor-guide.vercel.app/search?q=MSKU7482913&status=all&line=all",
     "elements": [
       {
         "id": "portal-header",
@@ -165,7 +165,7 @@
     ]
   },
   "container-detail": {
-    "url": "http://localhost:3210/containers/MSKU7482913",
+    "url": "https://harbor-guide.vercel.app/containers/MSKU7482913",
     "elements": [
       {
         "id": "portal-header",
@@ -205,7 +205,7 @@
     ]
   },
   "new-request": {
-    "url": "http://localhost:3210/requests/new?container=MSKU7482913",
+    "url": "https://harbor-guide.vercel.app/requests/new?container=MSKU7482913",
     "elements": [
       {
         "id": "portal-header",
@@ -265,7 +265,7 @@
     ]
   },
   "request-confirmation": {
-    "url": "http://localhost:3210/requests/REQ-S2RI4W",
+    "url": "https://harbor-guide.vercel.app/requests/REQ-Q0XFCN",
     "elements": [
       {
         "id": "portal-header",
@@ -305,7 +305,7 @@
     ]
   },
   "container-held": {
-    "url": "http://localhost:3210/containers/HLXU3388216",
+    "url": "https://harbor-guide.vercel.app/containers/HLXU3388216",
     "elements": [
       {
         "id": "portal-header",

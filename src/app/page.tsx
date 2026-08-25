@@ -24,7 +24,7 @@ const apps = [
 const milestones = [
   { label: "Scaffold & hosting", done: true },
   { label: "Portal flow", done: true },
-  { label: "Tutorial engine", done: false },
+  { label: "Tutorial engine", done: true },
   { label: "Search discovery", done: false },
   { label: "AI step authoring", done: false },
 ];

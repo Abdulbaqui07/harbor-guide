@@ -10,7 +10,10 @@ export default function LoginForm() {
   const [state, formAction, pending] = useActionState(loginAction, initial);
 
   return (
-    <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center px-6 py-16">
+    <main
+      data-tutorial-page="login"
+      className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center px-6 py-16"
+    >
       <div className="mb-8">
         <span
           aria-hidden

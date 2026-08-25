@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "flow-check": "node scripts/flow-check.mjs"
+    "flow-check": "node scripts/flow-check.mjs",
+    "tutorial-check": "node scripts/tutorial-check.mjs",
+    "db:migrate": "node db/migrate.mjs",
+    "db:seed": "node db/seed.mjs && node db/seed-tutorial.mjs",
+    "db:reset-demo": "node db/reset-demo.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
