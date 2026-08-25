@@ -8,7 +8,7 @@ const apps = [
     body: "The hosted product. Sign in, scan the yard dashboard, search a container, open its details, and raise a gate-release request.",
     flow: ["Login", "Dashboard", "Search", "Result", "Request", "Submitted"],
     cta: "Open the portal",
-    ready: false,
+    ready: true,
   },
   {
     href: "/guide",
@@ -23,7 +23,7 @@ const apps = [
 
 const milestones = [
   { label: "Scaffold & hosting", done: true },
-  { label: "Portal flow", done: false },
+  { label: "Portal flow", done: true },
   { label: "Tutorial engine", done: false },
   { label: "Search discovery", done: false },
   { label: "AI step authoring", done: false },
