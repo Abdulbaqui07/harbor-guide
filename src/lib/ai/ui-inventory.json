@@ -115,6 +115,40 @@
       }
     ]
   },
+  "requests": {
+    "elements": [
+      {
+        "id": "portal-header",
+        "tag": "header",
+        "text": "",
+        "conditional": false
+      },
+      {
+        "id": "nav-dashboard",
+        "tag": "a",
+        "text": "Dashboard",
+        "conditional": false
+      },
+      {
+        "id": "nav-search",
+        "tag": "a",
+        "text": "Containers",
+        "conditional": false
+      },
+      {
+        "id": "nav-requests",
+        "tag": "a",
+        "text": "Requests",
+        "conditional": false
+      },
+      {
+        "id": "logout",
+        "tag": "button",
+        "text": "Sign out",
+        "conditional": false
+      }
+    ]
+  },
   "search": {
     "elements": [
       {
@@ -198,13 +232,13 @@
         "id": "search-results",
         "tag": "ul",
         "text": "",
-        "conditional": false
+        "conditional": true
       },
       {
         "id": "result-MSKU7482913",
         "tag": "a",
         "text": "MSKU748291340HCMaersk Kowloon · 214WGulf Metals Trading LLCB",
-        "conditional": false
+        "conditional": true
       }
     ]
   },

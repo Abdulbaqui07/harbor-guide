@@ -17,19 +17,20 @@ export default async function RequestsPage() {
       </PageHeading>
 
       {requests.length === 0 ? (
-        <Card>
+        <Card data-tutorial-id="requests-empty">
           <p className="text-sm leading-relaxed text-muted">
             You haven&apos;t raised any requests yet.
           </p>
           <Link
             href="/search"
+            data-tutorial-id="requests-find-container"
             className="mt-4 inline-block rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-accent-fg transition-opacity hover:opacity-90"
           >
             Find a container
           </Link>
         </Card>
       ) : (
-        <ul className="space-y-2">
+        <ul data-tutorial-id="requests-list" className="space-y-2">
           {requests.map((r) => (
             <li key={r.id}>
               <Link

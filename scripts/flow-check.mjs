@@ -4,12 +4,37 @@ const BASE = process.env.BASE_URL ?? "http://localhost:3210";
 const results = [];
 const inventory = {};
 
+// The suite asserts an empty requests page, and every environment shares one
+// database, so a previous run would leave rows behind and make the harvested
+// inventory depend on run order. Start from a known-empty state.
+if (process.env.DATABASE_URL) {
+  const { neon } = await import("@neondatabase/serverless");
+  const sql = neon(process.env.DATABASE_URL);
+  await sql`delete from requests`;
+  await sql`delete from tutorial_progress`;
+  console.log("Cleared requests and progress so the run starts from empty.");
+} else {
+  console.log("DATABASE_URL not set - skipping pre-run cleanup.");
+}
+
 function check(name, ok, detail = "") {
   results.push({ name, ok, detail });
   console.log(`${ok ? "  PASS" : "  FAIL"}  ${name}${detail ? ` - ${detail}` : ""}`);
 }
 
 async function snapshot(page, label) {
+  // A button mid-action reads "Submitting..." rather than its resting label.
+  // Capturing that would make the inventory depend on timing.
+  await page
+    .waitForFunction(
+      () =>
+        ![...document.querySelectorAll("[data-tutorial-id]")].some((el) =>
+          (el.textContent ?? "").trim().endsWith("..."),
+        ),
+      { timeout: 3000 },
+    )
+    .catch(() => {});
+
   const ids = await page.$$eval("[data-tutorial-id]", (els) =>
     els.map((el) => ({
       id: el.getAttribute("data-tutorial-id"),
@@ -88,7 +113,17 @@ try {
   const dash = await snapshot(page, "dashboard");
   check("dashboard renders KPI tiles", dash.some((e) => e.id === "kpi-ready"));
 
+  // The requests page while still empty - a different set of controls entirely.
+  await page.goto(`${BASE}/requests`, { waitUntil: "domcontentloaded" });
+  const emptyReq = await snapshot(page, "requests-empty");
+  check(
+    "an empty requests page offers a way out",
+    emptyReq.some((e) => e.id === "requests-empty") &&
+      emptyReq.some((e) => e.id === "requests-find-container"),
+  );
+
   // 4. Search
+  await page.goto(`${BASE}/dashboard`, { waitUntil: "domcontentloaded" });
   await page.click('[data-tutorial-id="nav-search"]');
   await page.waitForURL("**/search", { timeout: 15000 });
   await page.fill('[data-tutorial-id="search-input"]', "MSKU7482913");
@@ -139,8 +174,25 @@ try {
   // 8. It persists on the requests list
   await page.click('[data-tutorial-id="nav-requests"]');
   await page.waitForURL("**/requests", { timeout: 15000 });
+  const populated = await snapshot(page, "requests-populated");
   const rows = await page.$$eval("li a", (els) => els.length);
   check("new request appears in the requests list", rows >= 1, `${rows} rows`);
+  check(
+    "a populated requests page exposes its list",
+    populated.some((e) => e.id === "requests-list"),
+  );
+
+  // A search that matches nothing: proves the result rows and the results list
+  // are state-dependent rather than always present.
+  await page.goto(`${BASE}/search?q=ZZZZ0000000&status=all&line=all`, {
+    waitUntil: "domcontentloaded",
+  });
+  const empty = await snapshot(page, "search-no-match");
+  check(
+    "a no-match search renders no result rows",
+    !empty.some((e) => e.id.startsWith("result-")) &&
+      !empty.some((e) => e.id === "search-results"),
+  );
 
   // 9. Held container blocks the CTA
   await page.goto(`${BASE}/containers/HLXU3388216`, { waitUntil: "domcontentloaded" });
