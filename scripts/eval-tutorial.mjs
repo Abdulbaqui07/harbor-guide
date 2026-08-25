@@ -25,7 +25,7 @@ const tutorial = await fetch(`${BASE}/api/tutorials/${SLUG}`).then((r) => {
   return r.json();
 });
 
-console.log(`\nEvaluating "${tutorial.title}" (${SLUG}) — ${tutorial.steps.length} steps`);
+console.log(`\nEvaluating "${tutorial.title}" (${SLUG}) - ${tutorial.steps.length} steps`);
 console.log(`Source: ${tutorial.source}   against ${BASE}\n`);
 
 // ---- Static pass: does every step name something real? ---------------------
@@ -50,7 +50,7 @@ let stalledAt = null;
 let stallReason = "";
 
 // A tutorial need not begin at sign-in, so enter the app at whatever page its
-// first step belongs to — otherwise the harness reports a failure it caused.
+// first step belongs to - otherwise the harness reports a failure it caused.
 const PAGE_PATHS = {
   login: "/login",
   dashboard: "/dashboard",
@@ -159,9 +159,9 @@ try {
 
 console.log(
   `Dynamic : completed ${reached}/${tutorial.steps.length} steps` +
-    (stalledAt ? `\n          x stalled at step ${stalledAt} — ${stallReason}` : ""),
+    (stalledAt ? `\n          x stalled at step ${stalledAt} - ${stallReason}` : ""),
 );
 
 const passed = staticIssues.length === 0 && !stalledAt;
-console.log(`\n${passed ? "PASS" : "FAIL"} — ${SLUG}\n`);
+console.log(`\n${passed ? "PASS" : "FAIL"} - ${SLUG}\n`);
 process.exit(passed ? 0 : 1);

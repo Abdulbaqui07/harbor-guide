@@ -11,14 +11,14 @@ const SAMPLE = {
 const results = [];
 function check(name, ok, detail = "") {
   results.push(ok);
-  console.log(`${ok ? "  PASS" : "  FAIL"}  ${name}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "  PASS" : "  FAIL"}  ${name}${detail ? ` - ${detail}` : ""}`);
 }
 
 const steps = await fetch(`${BASE}/api/tutorials/${SLUG}`)
   .then((r) => r.json())
   .then((t) => t.steps);
 
-console.log(`\nDriving "${SLUG}" — ${steps.length} steps against ${BASE}\n`);
+console.log(`\nDriving "${SLUG}" - ${steps.length} steps against ${BASE}\n`);
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
@@ -55,7 +55,7 @@ try {
 
   // Regression: a click step that navigates must have saved progress BEFORE
   // the engine unmounts. Forcing a full page load right after the click is the
-  // worst case — if the save happened inside a React updater it is lost, and
+  // worst case - if the save happened inside a React updater it is lost, and
   // the tutorial resumes on the previous page's step.
   await page.evaluate(() => localStorage.clear());
   await page.goto(`${BASE}/dashboard`, { waitUntil: "domcontentloaded" });

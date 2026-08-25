@@ -77,12 +77,12 @@ export default function LoginForm() {
           data-tutorial-id="login-submit"
           className="w-full rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg transition-opacity hover:opacity-90 disabled:opacity-60"
         >
-          {pending ? "Signing in…" : "Sign in"}
+          {pending ? "Signing in..." : "Sign in"}
         </button>
       </form>
 
       <p className="mt-6 rounded-lg border border-border bg-surface-2 px-3 py-2.5 font-mono text-xs leading-relaxed text-muted">
-        Demo account — operator@harbor.dev / harbor123
+        Demo account - operator@harbor.dev / harbor123
       </p>
 
       <Link href="/" className="mt-6 text-sm text-muted hover:text-accent">

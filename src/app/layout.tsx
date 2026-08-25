@@ -8,7 +8,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Harbor — Terminal Portal & Guide",
+  title: "Harbor - Terminal Portal & Guide",
   description:
     "A hosted container-terminal portal plus an AI-authored interactive tutorial platform that teaches users how to find and use it.",
 };

@@ -115,7 +115,7 @@ export const CONTAINERS: Container[] = [
     vessel: "MSC Aurora",
     voyage: "331E",
     status: "Loaded",
-    yardPosition: "—",
+    yardPosition: "-",
     dischargedAt: "2026-08-15",
     freeDaysRemaining: 0,
     grossWeightKg: 23470,

@@ -9,4 +9,4 @@ await sql`delete from requests`;
 await sql`delete from tutorial_progress`;
 
 console.log(`Cleared ${requests} requests and ${progress} progress rows.`);
-console.log("Containers and tutorials are untouched — the demo starts clean.");
+console.log("Containers and tutorials are untouched - the demo starts clean.");

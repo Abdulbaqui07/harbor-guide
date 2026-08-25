@@ -75,7 +75,7 @@ export default function AuthoringConsole() {
       </h1>
       <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
         Describe what a user should learn. Claude reads the application&apos;s
-        element inventory and returns structured steps — never code, and never a
+        element inventory and returns structured steps - never code, and never a
         selector it invented.
       </p>
 
@@ -119,7 +119,7 @@ export default function AuthoringConsole() {
             disabled={busy}
             className="rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-accent-fg transition-opacity hover:opacity-90 disabled:opacity-50"
           >
-            {busy ? "Generating…" : "Generate"}
+            {busy ? "Generating..." : "Generate"}
           </button>
           <button
             onClick={() => generate(true)}
@@ -132,7 +132,7 @@ export default function AuthoringConsole() {
 
         {busy && (
           <p className="mt-4 text-sm text-muted">
-            Claude is reading the inventory and drafting steps. Usually 25–35
+            Claude is reading the inventory and drafting steps. Usually 25-35
             seconds.
           </p>
         )}
@@ -165,12 +165,12 @@ export default function AuthoringConsole() {
             <div>
               <dt className="text-muted">Tokens</dt>
               <dd className="mt-1 text-sm">
-                {result.usage ? `${result.usage.input} / ${result.usage.output}` : "—"}
+                {result.usage ? `${result.usage.input} / ${result.usage.output}` : "-"}
               </dd>
             </div>
             <div>
               <dt className="text-muted">Cost</dt>
-              <dd className="mt-1 text-sm">{cost !== null ? `$${cost.toFixed(4)}` : "—"}</dd>
+              <dd className="mt-1 text-sm">{cost !== null ? `$${cost.toFixed(4)}` : "-"}</dd>
             </div>
             <div>
               <dt className="text-muted">Elapsed</dt>
@@ -186,7 +186,7 @@ export default function AuthoringConsole() {
               <ul className="mt-2 space-y-1">
                 {result.issues.map((i) => (
                   <li key={`${i.index}-${i.targetId}`} className="font-mono text-xs text-muted">
-                    step {i.index + 1} · {i.targetId} — {i.reason}
+                    step {i.index + 1} · {i.targetId} - {i.reason}
                   </li>
                 ))}
               </ul>

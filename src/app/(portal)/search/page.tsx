@@ -49,7 +49,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
               id="q"
               name="q"
               defaultValue={q}
-              placeholder="MSKU7482913, Maersk Kowloon…"
+              placeholder="MSKU7482913, Maersk Kowloon..."
               data-tutorial-id="search-input"
               className={selectClass}
             />

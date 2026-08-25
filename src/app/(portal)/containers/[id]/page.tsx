@@ -55,7 +55,7 @@ export default async function ContainerPage({
             value={
               container.freeDaysRemaining > 0
                 ? `${container.freeDaysRemaining} days`
-                : "Expired — demurrage applies"
+                : "Expired - demurrage applies"
             }
           />
         </dl>

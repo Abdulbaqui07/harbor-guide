@@ -5,7 +5,7 @@ import { listTutorials } from "@/lib/tutorials";
 export const dynamic = "force-dynamic";
 
 const JOURNEY = [
-  { n: 1, label: "Search the web", body: "Start where a real user starts — a search engine, not a bookmark." },
+  { n: 1, label: "Search the web", body: "Start where a real user starts - a search engine, not a bookmark." },
   { n: 2, label: "Spot the right result", body: "Learn which result is your terminal's portal, and how to tell it from the rest." },
   { n: 3, label: "Sign in", body: "Land on the portal and get through the door." },
   { n: 4, label: "Book a gate release", body: "Find a container and raise a collection request, guided at every field." },
@@ -23,7 +23,7 @@ export default async function GuideHome() {
         Never used the portal before?
       </h1>
       <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
-        This walks you the whole way — from typing a search into your browser to
+        This walks you the whole way - from typing a search into your browser to
         holding a confirmed collection reference. Nothing to read first, nothing
         to install.
       </p>

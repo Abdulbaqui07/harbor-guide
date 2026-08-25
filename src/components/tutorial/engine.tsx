@@ -172,7 +172,7 @@ export default function TutorialEngine() {
 
   // ---- Self-heal: the click navigated but the advance was lost -------------
   // If we're sitting on the page the NEXT step belongs to, the current step
-  // has effectively been completed — recover rather than stranding the user
+  // has effectively been completed - recover rather than stranding the user
   // on an off-track card whose only real option is Exit.
   if (!onThisPage && currentPage) {
     const next = tutorial.steps[index + 1];
@@ -298,7 +298,7 @@ export default function TutorialEngine() {
           {(step.action === "input" || step.action === "select") && !valid && (
             <p className="text-xs text-muted">
               {step.expectedValue
-                ? `Waiting for “${step.expectedValue}”`
+                ? `Waiting for "${step.expectedValue}"`
                 : "Fill the highlighted field"}
             </p>
           )}

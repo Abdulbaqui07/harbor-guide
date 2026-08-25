@@ -22,7 +22,7 @@ function writeState(state: Persisted | null) {
     if (state) localStorage.setItem(STATE_KEY, JSON.stringify(state));
     else localStorage.removeItem(STATE_KEY);
   } catch {
-    /* private mode — the tutorial still works, it just won't resume */
+    /* private mode - the tutorial still works, it just won't resume */
   }
 }
 
@@ -89,7 +89,7 @@ export function useTutorialState() {
 
   // Mirror the index in a ref so advancing never has to read it from inside a
   // state updater. Click steps often navigate, and if the engine unmounts
-  // before React runs the updater the save is simply lost — leaving the next
+  // before React runs the updater the save is simply lost - leaving the next
   // page resuming at the previous step.
   const indexRef = useRef(index);
   useEffect(() => {
@@ -105,7 +105,7 @@ export function useTutorialState() {
       const data = (await res.json()) as Tutorial;
 
       // With no explicit resume point, begin at the first step for the page
-      // the user is already on — so "Show me how" works from anywhere and a
+      // the user is already on - so "Show me how" works from anywhere and a
       // signed-in user never gets sent back to a sign-in step they're past.
       let at = resumeAt;
       if (at === undefined) {
@@ -192,7 +192,7 @@ export function isStepSatisfied(step: Step): boolean {
     const want = step.expectedValue.trim().toLowerCase();
     if (value.toLowerCase() === want) return true;
     // A <select>'s value is rarely what the user sees, so match the visible
-    // option label too — that is what a step author would naturally write.
+    // option label too - that is what a step author would naturally write.
     if (el instanceof HTMLSelectElement) {
       const label = el.selectedOptions[0]?.textContent?.trim().toLowerCase();
       if (label === want) return true;

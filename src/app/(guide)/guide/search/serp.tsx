@@ -15,14 +15,14 @@ type Result = {
 
 const RESULTS: Result[] = [
   {
-    title: "Terminal Operations Handbook (PDF) — PortLogix",
+    title: "Terminal Operations Handbook (PDF) - PortLogix",
     url: "portlogix.example/resources/handbook",
     crumb: "portlogix.example › resources",
     snippet:
       "A 90-page reference covering yard planning, gate procedures and container handling standards for mid-size terminals.",
   },
   {
-    title: "Harbor Terminal Portal — Container tracking & gate requests",
+    title: "Harbor Terminal Portal - Container tracking & gate requests",
     url: "harbor-guide.vercel.app",
     crumb: "harbor-guide.vercel.app",
     snippet:
@@ -30,21 +30,21 @@ const RESULTS: Result[] = [
     ours: true,
   },
   {
-    title: "Container tracking software compared (2026) — FreightWire",
+    title: "Container tracking software compared (2026) - FreightWire",
     url: "freightwire.example/reviews/container-tracking",
     crumb: "freightwire.example › reviews",
     snippet:
       "We tested eleven terminal operating systems on usability, reporting and gate automation. Here's how they ranked.",
   },
   {
-    title: "How do I book a gate release? — CargoDesk Forum",
+    title: "How do I book a gate release? - CargoDesk Forum",
     url: "forum.cargodesk.example/t/gate-release/9182",
     crumb: "forum.cargodesk.example › t",
     snippet:
       "Been waiting three days on a release for a 40HC. Does anyone know if the haulier needs to be registered first?",
   },
   {
-    title: "Northgate Terminals — Customer services",
+    title: "Northgate Terminals - Customer services",
     url: "northgate-terminals.example/services",
     crumb: "northgate-terminals.example",
     snippet:
@@ -72,7 +72,7 @@ export default function SerpSimulation() {
     <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-10">
       <header className="mb-6">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-          Step 1 — Discovery
+          Step 1 - Discovery
         </p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight">
           Finding the portal in a browser
@@ -103,7 +103,7 @@ export default function SerpSimulation() {
           </div>
 
           {phase === "searching" ? (
-            <p className="py-10 text-center text-sm text-muted">Searching…</p>
+            <p className="py-10 text-center text-sm text-muted">Searching...</p>
           ) : (
             <>
               <p className="mb-4 text-xs text-muted">
@@ -163,7 +163,7 @@ export default function SerpSimulation() {
         <p className="mt-1.5 text-sm leading-relaxed text-muted">
           Check the address before you sign in anywhere:{" "}
           <span className="font-mono text-foreground">harbor-guide.vercel.app</span>.
-          The others are handbooks, reviews and forum threads — useful reading,
+          The others are handbooks, reviews and forum threads - useful reading,
           but not somewhere you can raise a gate release.
         </p>
         <Link
@@ -179,7 +179,7 @@ export default function SerpSimulation() {
           Why this is a simulation.
         </strong>{" "}
         A web page cannot reach into a real search engine&apos;s results and
-        highlight anything — the browser&apos;s same-origin policy forbids it,
+        highlight anything - the browser&apos;s same-origin policy forbids it,
         and rightly so. Doing it for real needs a browser extension with explicit
         permission for that site. This reproduces the moment faithfully so the
         discovery step can be taught without one.

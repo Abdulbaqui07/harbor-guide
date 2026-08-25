@@ -4,7 +4,7 @@ import { neon } from "@neondatabase/serverless";
 const sql = neon(process.env.DATABASE_URL);
 
 const statements = readFileSync("db/schema.sql", "utf8")
-  // Strip line comments first — otherwise a statement preceded by a comment
+  // Strip line comments first - otherwise a statement preceded by a comment
   // looks like a comment and gets skipped.
   .split("\n")
   .filter((line) => !line.trim().startsWith("--"))

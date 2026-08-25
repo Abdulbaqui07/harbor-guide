@@ -46,6 +46,9 @@ Hard rules:
 - Write for someone who has never seen the app and does not know the jargon.
   Explain why a step matters, not just what to press.
 - Keep each message under two sentences.
+- Use plain ASCII punctuation only. Hyphens, never em dashes or en dashes.
+  Straight quotes, never curly ones. Three dots, never a single ellipsis
+  character.
 `.trim();
 
 const prompt = ChatPromptTemplate.fromMessages([
@@ -87,7 +90,7 @@ export async function generateTutorial(goal: string): Promise<GenerationResult> 
   const result = await chain.invoke({
     context: APP_CONTEXT,
     goal,
-    // Only ids and labels — the model never needs the URLs or markup.
+    // Only ids and labels - the model never needs the URLs or markup.
     inventory: JSON.stringify(
       Object.fromEntries(
         Object.entries(inventory).map(([page, data]) => [

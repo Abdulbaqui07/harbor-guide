@@ -5,7 +5,7 @@ tutorial platform that teaches a first-time user how to find it and use it.
 
 **Live: https://harbor-guide.vercel.app**
 
-Demo account — `operator@harbor.dev` / `harbor123`
+Demo account - `operator@harbor.dev` / `harbor123`
 
 ---
 
@@ -16,7 +16,7 @@ in, scan the yard, search for a container, check its holds and remaining free
 time, and raise a gate release so a truck can collect it.
 
 **Harbor Guide** (`src/app/(guide)`) teaches that journey. It starts where a
-real user starts — a web search — highlights the right result, hands off into
+real user starts - a web search - highlights the right result, hands off into
 the portal, and then walks them through their first request field by field.
 
 Start the full experience at [`/guide`](https://harbor-guide.vercel.app/guide),
@@ -38,7 +38,7 @@ Tutorials are **data, not code**. A step is a row:
 Every interactive element in the portal carries a stable `data-tutorial-id`,
 and every page a `data-tutorial-page`. The engine reads steps from Postgres,
 tracks the target's rect on an animation frame so the spotlight follows scroll
-and layout shifts, and **gates progress on the user actually doing the thing** —
+and layout shifts, and **gates progress on the user actually doing the thing** -
 click steps advance only on a real click of the real element, field steps keep
 Continue disabled until the value validates. Progress is persisted, so a
 tutorial survives navigation and reloads.
@@ -60,7 +60,7 @@ for that site. The constraint is worth stating rather than faking past.
 
 [`/guide/authoring`](https://harbor-guide.vercel.app/guide/authoring) writes a
 tutorial from a plain-English goal, using **LangChain.js** with
-`ChatAnthropic` and `withStructuredOutput()` against a zod schema — Claude
+`ChatAnthropic` and `withStructuredOutput()` against a zod schema - Claude
 returns validated step records, never prose and never code. Roughly 20 seconds
 and $0.06 per tutorial.
 
@@ -74,11 +74,11 @@ set is dropped and reported.
 thing in Chromium and reports the step it stalls on. It caught three defects
 the allowlist approved:
 
-- a step targeting `container-held` — a label the *harvester* invented, not a
+- a step targeting `container-held` - a label the *harvester* invented, not a
   real `data-tutorial-page`, so it could never match at runtime
 - steps pointing at `container-holds` on a container that has none: the element
   exists on that page, but only in a state the tutorial never navigated to
-- `expectedValue: "Any status"` — the label a user reads — when the element's
+- `expectedValue: "Any status"` - the label a user reads - when the element's
   value is `"all"`, so the step could never be satisfied
 
 Each became a contract fix: the inventory is keyed on real page attributes,
@@ -116,7 +116,7 @@ npm run db:reset-demo    # clear requests and progress before a demo
 
 All of them accept `BASE_URL=https://harbor-guide.vercel.app` to run against
 production rather than localhost. Several bugs here only ever appeared against
-production — a progress write cancelled mid-navigation was invisible locally.
+production - a progress write cancelled mid-navigation was invisible locally.
 
 ## Stack
 
@@ -128,7 +128,7 @@ Vercel, functions pinned to `fra1` beside the database.
 
 A modular monolith is the right size for this. Queues, a vector store, a
 service split and an observability stack are all defensible *later*, and all
-would be cargo cult *now* — see the design notes for where each would earn its
+would be cargo cult *now* - see the design notes for where each would earn its
 place.
 
 The one component genuinely missing is the **browser extension** for the

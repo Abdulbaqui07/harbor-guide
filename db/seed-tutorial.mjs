@@ -28,7 +28,7 @@ const STEPS = [
   { page: "search", target_id: "search-input", action: "input",
     expected_value: "MSKU7482913",
     title: "Enter the container number",
-    message: "Type MSKU7482913 — the number printed on the container door." },
+    message: "Type MSKU7482913 - the number printed on the container door." },
 
   { page: "search", target_id: "search-submit", action: "click",
     title: "Run the search",
@@ -53,7 +53,7 @@ const STEPS = [
 
   { page: "new-request", target_id: "request-haulier", action: "input",
     title: "Name the haulier",
-    message: "The transport company collecting the box — try Al Noor Transport LLC. The grey text is only a hint, so you do need to type it." },
+    message: "The transport company collecting the box - try Al Noor Transport LLC. The grey text is only a hint, so you do need to type it." },
 
   { page: "new-request", target_id: "request-date", action: "input",
     title: "Pick the collection date",
@@ -96,7 +96,7 @@ const rows = await sql`
   select sequence, page, target_id, action from tutorial_steps
   where tutorial_id = ${TUTORIAL.id} order by sequence
 `;
-console.log(`Seeded "${TUTORIAL.title}" — ${rows.length} steps\n`);
+console.log(`Seeded "${TUTORIAL.title}" - ${rows.length} steps\n`);
 for (const r of rows) {
   console.log(`  ${String(r.sequence).padStart(2)}. ${r.page.padEnd(22)} ${r.action.padEnd(8)} ${r.target_id}`);
 }

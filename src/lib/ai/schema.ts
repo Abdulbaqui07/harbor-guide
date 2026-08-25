@@ -3,7 +3,7 @@ import { z } from "zod";
 export const ACTIONS = ["click", "input", "select", "observe"] as const;
 
 /**
- * The shape the model must produce. Descriptions are part of the prompt —
+ * The shape the model must produce. Descriptions are part of the prompt -
  * withStructuredOutput sends them to Claude as the tool schema.
  */
 export const generatedStepSchema = z.object({
@@ -44,7 +44,7 @@ export type InventoryElement = {
   id: string;
   tag: string;
   text: string;
-  /** Only rendered in certain states — e.g. Create request hides when a container has holds. */
+  /** Only rendered in certain states - e.g. Create request hides when a container has holds. */
   conditional?: boolean;
   /** For <select>, the visible option labels a step may expect. */
   options?: string[];
