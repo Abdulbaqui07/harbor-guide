@@ -91,6 +91,15 @@ try {
     page.url().split("/").pop(),
   );
 
+  // Guards against date columns being rendered from a JS Date ("Fri Aug 28")
+  // instead of the ISO string Postgres formats for us.
+  const confirmText = await page.textContent('[data-tutorial-id="request-confirmation"]');
+  check(
+    "collection date renders as an ISO date",
+    confirmText?.includes("2026-08-28") ?? false,
+    confirmText?.match(/\d{4}-\d{2}-\d{2}|[A-Z][a-z]{2} [A-Z][a-z]{2} \d+/)?.[0],
+  );
+
   // 8. It persists on the requests list
   await page.click('[data-tutorial-id="nav-requests"]');
   await page.waitForURL("**/requests", { timeout: 15000 });

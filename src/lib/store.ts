@@ -1,98 +1,164 @@
-import { cookies } from "next/headers";
-import { CONTAINERS } from "./seed";
-import type { Container, RequestKind, TerminalRequest } from "./types";
+import { sql } from "./db";
+import type {
+  Container,
+  ContainerStatus,
+  HoldKind,
+  RequestKind,
+  RequestStatus,
+  TerminalRequest,
+} from "./types";
 
-/**
- * Data access for the portal. Every function is async so the Postgres-backed
- * implementation can drop straight in behind the same signatures.
- */
+/** Row shapes as they come back from Postgres. */
+type ContainerRow = {
+  id: string;
+  iso_type: string;
+  line: string;
+  vessel: string;
+  voyage: string;
+  status: string;
+  yard_position: string;
+  discharged_at: string;
+  free_days_remaining: number;
+  gross_weight_kg: number;
+  holds: string[];
+  consignee: string;
+};
 
-const REQUESTS_COOKIE = "harbor_requests";
+type RequestRow = {
+  id: string;
+  container_id: string;
+  kind: string;
+  haulier: string;
+  collection_date: string;
+  notes: string;
+  status: string;
+  created_at: string;
+};
+
+function toContainer(r: ContainerRow): Container {
+  return {
+    id: r.id,
+    isoType: r.iso_type,
+    line: r.line,
+    vessel: r.vessel,
+    voyage: r.voyage,
+    status: r.status as ContainerStatus,
+    yardPosition: r.yard_position,
+    dischargedAt: r.discharged_at,
+    freeDaysRemaining: r.free_days_remaining,
+    grossWeightKg: r.gross_weight_kg,
+    holds: r.holds as HoldKind[],
+    consignee: r.consignee,
+  };
+}
+
+function toRequest(r: RequestRow): TerminalRequest {
+  return {
+    id: r.id,
+    containerId: r.container_id,
+    kind: r.kind as RequestKind,
+    haulier: r.haulier,
+    collectionDate: r.collection_date,
+    notes: r.notes,
+    status: r.status as RequestStatus,
+    createdAt: new Date(r.created_at).toISOString(),
+  };
+}
 
 export async function listContainers(query?: {
   q?: string;
   status?: string;
   line?: string;
 }): Promise<Container[]> {
-  const q = query?.q?.trim().toLowerCase();
+  const q = query?.q?.trim() ? `%${query.q.trim()}%` : null;
+  const status = query?.status && query.status !== "all" ? query.status : null;
+  const line = query?.line && query.line !== "all" ? query.line : null;
 
-  return CONTAINERS.filter((c) => {
-    if (query?.status && query.status !== "all" && c.status !== query.status) {
-      return false;
-    }
-    if (query?.line && query.line !== "all" && c.line !== query.line) {
-      return false;
-    }
-    if (!q) return true;
-    return (
-      c.id.toLowerCase().includes(q) ||
-      c.vessel.toLowerCase().includes(q) ||
-      c.consignee.toLowerCase().includes(q) ||
-      c.line.toLowerCase().includes(q)
-    );
-  });
+  const rows = (await sql`
+    select id, iso_type, line, vessel, voyage, status, yard_position,
+           discharged_at::text as discharged_at, free_days_remaining,
+           gross_weight_kg, holds, consignee
+    from containers
+    where (${status}::text is null or status = ${status})
+      and (${line}::text is null or line = ${line})
+      and (
+        ${q}::text is null
+        or id ilike ${q}
+        or vessel ilike ${q}
+        or consignee ilike ${q}
+        or line ilike ${q}
+      )
+    order by discharged_at desc, id
+  `) as ContainerRow[];
+
+  return rows.map(toContainer);
 }
 
 export async function getContainer(id: string): Promise<Container | null> {
-  return CONTAINERS.find((c) => c.id.toUpperCase() === id.toUpperCase()) ?? null;
+  const rows = (await sql`
+    select id, iso_type, line, vessel, voyage, status, yard_position,
+           discharged_at::text as discharged_at, free_days_remaining,
+           gross_weight_kg, holds, consignee
+    from containers where upper(id) = upper(${id}) limit 1
+  `) as ContainerRow[];
+  return rows[0] ? toContainer(rows[0]) : null;
 }
 
 export async function listLines(): Promise<string[]> {
-  return [...new Set(CONTAINERS.map((c) => c.line))].sort();
+  const rows = (await sql`
+    select distinct line from containers order by line
+  `) as { line: string }[];
+  return rows.map((r) => r.line);
 }
 
-async function readRequests(): Promise<TerminalRequest[]> {
-  const jar = await cookies();
-  const raw = jar.get(REQUESTS_COOKIE)?.value;
-  if (!raw) return [];
-  try {
-    const parsed: unknown = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as TerminalRequest[]) : [];
-  } catch {
-    return [];
-  }
+export async function listRequests(userKey: string): Promise<TerminalRequest[]> {
+  const rows = (await sql`
+    select id, container_id, kind, haulier,
+           collection_date::text as collection_date, notes, status,
+           created_at
+    from requests
+    where user_key = ${userKey}
+    order by created_at desc
+  `) as RequestRow[];
+  return rows.map(toRequest);
 }
 
-async function writeRequests(requests: TerminalRequest[]) {
-  const jar = await cookies();
-  // Keep the newest few so the cookie stays well under the 4KB limit.
-  jar.set(REQUESTS_COOKIE, JSON.stringify(requests.slice(0, 8)), {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 8,
-  });
-}
-
-export async function listRequests(): Promise<TerminalRequest[]> {
-  return readRequests();
-}
-
-export async function getRequest(id: string): Promise<TerminalRequest | null> {
-  const all = await readRequests();
-  return all.find((r) => r.id === id) ?? null;
+export async function getRequest(
+  id: string,
+  userKey: string,
+): Promise<TerminalRequest | null> {
+  const rows = (await sql`
+    select id, container_id, kind, haulier,
+           collection_date::text as collection_date, notes, status,
+           created_at
+    from requests
+    where id = ${id} and user_key = ${userKey}
+    limit 1
+  `) as RequestRow[];
+  return rows[0] ? toRequest(rows[0]) : null;
 }
 
 export async function createRequest(input: {
   containerId: string;
+  userKey: string;
   kind: RequestKind;
   haulier: string;
   collectionDate: string;
   notes: string;
 }): Promise<TerminalRequest> {
-  const request: TerminalRequest = {
-    id: `REQ-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
-    containerId: input.containerId,
-    kind: input.kind,
-    haulier: input.haulier,
-    collectionDate: input.collectionDate,
-    notes: input.notes,
-    status: "Submitted",
-    createdAt: new Date().toISOString(),
-  };
+  const id = `REQ-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
 
-  const all = await readRequests();
-  await writeRequests([request, ...all]);
-  return request;
+  const rows = (await sql`
+    insert into requests (
+      id, container_id, user_key, kind, haulier, collection_date, notes, status
+    ) values (
+      ${id}, ${input.containerId}, ${input.userKey}, ${input.kind},
+      ${input.haulier}, ${input.collectionDate}, ${input.notes}, 'Submitted'
+    )
+    returning id, container_id, kind, haulier,
+           collection_date::text as collection_date, notes, status,
+           created_at
+  `) as RequestRow[];
+
+  return toRequest(rows[0]);
 }

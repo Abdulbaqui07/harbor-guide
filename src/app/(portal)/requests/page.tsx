@@ -4,8 +4,8 @@ import { listRequests } from "@/lib/store";
 import { Card, PageHeading, StatusBadge } from "@/components/ui";
 
 export default async function RequestsPage() {
-  await requireSession();
-  const requests = await listRequests();
+  const session = await requireSession();
+  const requests = await listRequests(session.id);
 
   return (
     <main

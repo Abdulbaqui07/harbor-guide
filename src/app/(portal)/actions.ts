@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { DEMO_USER } from "@/lib/seed";
-import { createSession, destroySession } from "@/lib/session";
+import { createSession, destroySession, requireSession } from "@/lib/session";
 import { createRequest } from "@/lib/store";
 import type { RequestKind } from "@/lib/types";
 
@@ -82,8 +82,11 @@ export async function createRequestAction(
     return { error: parsed.error.issues[0].message };
   }
 
+  const session = await requireSession();
+
   const request = await createRequest({
     containerId: parsed.data.containerId,
+    userKey: session.id,
     kind: parsed.data.kind as RequestKind,
     haulier: parsed.data.haulier,
     collectionDate: parsed.data.collectionDate,

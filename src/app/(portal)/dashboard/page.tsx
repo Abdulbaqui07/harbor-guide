@@ -6,7 +6,7 @@ import { Card, PageHeading, StatusBadge } from "@/components/ui";
 export default async function DashboardPage() {
   const session = await requireSession();
   const containers = await listContainers();
-  const requests = await listRequests();
+  const requests = await listRequests(session.id);
 
   const readyToCollect = containers.filter((c) => c.status === "Gate Out Ready");
   const onHold = containers.filter((c) => c.status === "On Hold");

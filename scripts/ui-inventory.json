@@ -90,7 +90,7 @@
       {
         "id": "requests-panel",
         "tag": "section",
-        "text": "Your recent requestsNo requests yet. Find a container and ra"
+        "text": "Your recent requestsMSKU7482913Gate ReleaseSubmittedFind a c"
       },
       {
         "id": "dashboard-find-container",
@@ -265,7 +265,7 @@
     ]
   },
   "request-confirmation": {
-    "url": "http://localhost:3210/requests/REQ-KISIP6",
+    "url": "http://localhost:3210/requests/REQ-S2RI4W",
     "elements": [
       {
         "id": "portal-header",

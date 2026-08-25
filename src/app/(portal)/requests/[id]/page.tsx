@@ -7,10 +7,10 @@ import { Card, Field, StatusBadge } from "@/components/ui";
 export default async function RequestPage({
   params,
 }: PageProps<"/requests/[id]">) {
-  await requireSession();
+  const session = await requireSession();
 
   const { id } = await params;
-  const request = await getRequest(id);
+  const request = await getRequest(id, session.id);
   if (!request) notFound();
 
   return (
