@@ -1,69 +1,112 @@
-import Image from "next/image";
+import Link from "next/link";
+
+const apps = [
+  {
+    href: "/login",
+    eyebrow: "Application 1",
+    title: "Harbor Terminal Portal",
+    body: "The hosted product. Sign in, scan the yard dashboard, search a container, open its details, and raise a gate-release request.",
+    flow: ["Login", "Dashboard", "Search", "Result", "Request", "Submitted"],
+    cta: "Open the portal",
+    ready: false,
+  },
+  {
+    href: "/guide",
+    eyebrow: "Application 2",
+    title: "Harbor Guide",
+    body: "The tutorial platform. It walks a brand-new user from a browser search all the way through their first completed request, highlighting each control as they go.",
+    flow: ["Discover", "Search results", "Land", "Guided steps", "Verified"],
+    cta: "Start the walkthrough",
+    ready: false,
+  },
+];
+
+const milestones = [
+  { label: "Scaffold & hosting", done: true },
+  { label: "Portal flow", done: false },
+  { label: "Tutorial engine", done: false },
+  { label: "Search discovery", done: false },
+  { label: "AI step authoring", done: false },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
+      <header className="max-w-2xl">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
+          Harbor
+        </p>
+        <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+          A product, and something that teaches you to use it.
+        </h1>
+        <p className="mt-5 text-lg leading-relaxed text-muted">
+          Two applications on one deployment. A working container-terminal portal,
+          and a tutorial platform that takes a first-time user from a browser
+          search result to a completed request without anyone sitting next to them.
+        </p>
+      </header>
+
+      <div className="mt-14 grid gap-5 sm:grid-cols-2">
+        {apps.map((app) => (
+          <Link
+            key={app.href}
+            href={app.href}
+            className="group flex flex-col rounded-xl border border-border bg-surface p-6 transition-colors hover:border-accent"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-xs uppercase tracking-[0.16em] text-muted">
+                {app.eyebrow}
+              </p>
+              {!app.ready && (
+                <span className="rounded-full bg-surface-2 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted">
+                  Building
+                </span>
+              )}
+            </div>
+            <h2 className="mt-3 text-xl font-semibold">{app.title}</h2>
+            <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted">
+              {app.body}
+            </p>
+            <ol className="mt-5 flex flex-wrap items-center gap-x-1.5 gap-y-2 font-mono text-[11px] text-muted">
+              {app.flow.map((step, i) => (
+                <li key={step} className="flex items-center gap-1.5">
+                  {i > 0 && <span aria-hidden className="text-border">→</span>}
+                  <span className="rounded bg-surface-2 px-1.5 py-0.5">{step}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-5 text-sm font-medium text-accent">
+              {app.cta}{" "}
+              <span aria-hidden className="inline-block transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
+            </p>
+          </Link>
+        ))}
+      </div>
+
+      <section className="mt-14 rounded-xl border border-border bg-surface p-6">
+        <h2 className="text-sm font-semibold">Build progress</h2>
+        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+          {milestones.map((m) => (
+            <li key={m.label} className="flex items-center gap-2 text-sm">
+              <span
+                aria-hidden
+                className={`size-1.5 rounded-full ${m.done ? "bg-ok" : "bg-border"}`}
+              />
+              <span className={m.done ? "text-foreground" : "text-muted"}>
+                {m.label}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <footer className="mt-10 font-mono text-xs text-muted">
+        <Link href="/api/health" className="hover:text-accent">
+          /api/health
+        </Link>
+      </footer>
+    </main>
   );
 }
