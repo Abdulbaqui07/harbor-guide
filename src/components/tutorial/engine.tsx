@@ -10,6 +10,7 @@ import {
   useTutorialState,
 } from "./use-tutorial";
 import { PAGE_LABELS, PAGE_PATHS, type Step } from "./types";
+import { START_EVENT } from "./help-button";
 
 const PAD = 6;
 const TIP_W = 350;
@@ -49,11 +50,22 @@ export default function TutorialEngine() {
     const stored = readState();
 
     if (fromUrl) {
-      void start(fromUrl, stored?.slug === fromUrl ? stored.index : 0);
+      // undefined (not 0) so a fresh run picks the step for this page.
+      void start(fromUrl, stored?.slug === fromUrl ? stored.index : undefined);
     } else if (stored) {
       void start(stored.slug, stored.index);
     }
   }, [params, start]);
+
+  // Any "Show me how" button on the page can launch a tutorial.
+  useEffect(() => {
+    const onStart = (e: Event) => {
+      const slug = (e as CustomEvent<{ slug: string }>).detail?.slug;
+      if (slug) void start(slug);
+    };
+    window.addEventListener(START_EVENT, onStart);
+    return () => window.removeEventListener(START_EVENT, onStart);
+  }, [start]);
 
   const step: Step | null =
     tutorial && index < tutorial.steps.length ? tutorial.steps[index] : null;

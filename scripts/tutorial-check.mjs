@@ -27,6 +27,36 @@ const sel = (id) => `[data-tutorial-id="${id}"]`;
 const tip = '[role="dialog"]';
 
 try {
+  // A signed-in user following the deep link must not lose the tutorial.
+  await page.goto(`${BASE}/login`, { waitUntil: "domcontentloaded" });
+  await page.fill(sel("login-email"), "operator@harbor.dev");
+  await page.fill(sel("login-password"), "harbor123");
+  await page.click(sel("login-submit"));
+  await page.waitForURL("**/dashboard", { timeout: 15000 });
+
+  await page.goto(`${BASE}/login?tutorial=${SLUG}`, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector(tip, { timeout: 15000 });
+  check(
+    "deep link survives the signed-in bounce and skips to this page's step",
+    (await page.textContent(tip))?.includes("Step 2 of") ?? false,
+    (await page.textContent(tip))?.match(/Step \d+ of \d+/)?.[0],
+  );
+
+  // The header button starts the tutorial from wherever the user already is.
+  await page.evaluate(() => localStorage.clear());
+  await page.goto(`${BASE}/search`, { waitUntil: "domcontentloaded" });
+  await page.click("text=Show me how");
+  await page.waitForSelector(tip, { timeout: 15000 });
+  check(
+    "header button starts at the current page's step",
+    (await page.textContent(tip))?.includes("Step 4 of") ?? false,
+    (await page.textContent(tip))?.match(/Step \d+ of \d+/)?.[0],
+  );
+
+  // Back to a clean run from the top.
+  await page.evaluate(() => localStorage.clear());
+  await page.goto(`${BASE}/api/auth-reset`, { waitUntil: "domcontentloaded" }).catch(() => {});
+  await page.context().clearCookies();
   await page.goto(`${BASE}/login?tutorial=${SLUG}`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(tip, { timeout: 15000 });
 

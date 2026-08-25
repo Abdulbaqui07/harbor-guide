@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getSession } from "@/lib/session";
+import HelpButton from "@/components/tutorial/help-button";
 import { logoutAction } from "./actions";
 
 const NAV = [
@@ -48,6 +49,7 @@ export default async function PortalLayout({
             </nav>
 
             <div className="ml-auto flex items-center gap-4">
+              <HelpButton />
               <div className="hidden text-right sm:block">
                 <p className="text-sm font-medium leading-tight">
                   {session.name}

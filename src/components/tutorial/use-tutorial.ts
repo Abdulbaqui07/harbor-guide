@@ -93,7 +93,18 @@ export function useTutorialState() {
       const res = await fetch(`/api/tutorials/${slug}`);
       if (!res.ok) throw new Error("not found");
       const data = (await res.json()) as Tutorial;
-      const at = resumeAt ?? 0;
+
+      // With no explicit resume point, begin at the first step for the page
+      // the user is already on — so "Show me how" works from anywhere and a
+      // signed-in user never gets sent back to a sign-in step they're past.
+      let at = resumeAt;
+      if (at === undefined) {
+        const page = document
+          .querySelector<HTMLElement>("[data-tutorial-page]")
+          ?.dataset.tutorialPage;
+        const i = page ? data.steps.findIndex((s) => s.page === page) : -1;
+        at = i >= 0 ? i : 0;
+      }
       setTutorial(data);
       setIndex(at);
       writeState({ slug, index: at });
