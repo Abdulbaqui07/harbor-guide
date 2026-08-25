@@ -53,6 +53,48 @@ try {
     (await page.textContent(tip))?.match(/Step \d+ of \d+/)?.[0],
   );
 
+  // Regression: a click step that navigates must have saved progress BEFORE
+  // the engine unmounts. Forcing a full page load right after the click is the
+  // worst case — if the save happened inside a React updater it is lost, and
+  // the tutorial resumes on the previous page's step.
+  await page.evaluate(() => localStorage.clear());
+  await page.goto(`${BASE}/dashboard`, { waitUntil: "domcontentloaded" });
+  await page.click("text=Show me how");
+  await page.waitForSelector(tip, { timeout: 15000 });
+  await page.click(`${tip} >> text=Got it`);          // step 2 -> 3
+  await page.waitForTimeout(400);
+  await page.click(sel("nav-search"));                 // step 3 -> 4, navigates
+  await page.waitForURL("**/search", { timeout: 15000 });
+  await page.goto(`${BASE}/search`, { waitUntil: "domcontentloaded" }); // hard load
+  await page.waitForSelector(tip, { timeout: 15000 });
+  const resumed = await page.textContent(tip);
+  check(
+    "progress survives a click step that navigates",
+    resumed?.includes("Step 4 of") ?? false,
+    resumed?.match(/Step \d+ of \d+/)?.[0],
+  );
+
+  // Simulate a lost advance directly: saved step is 3 (a dashboard click step)
+  // but we're on /search, the page step 4 belongs to. The engine should
+  // recover to step 4 rather than stranding the user on an off-track card.
+  await page.goto(`${BASE}/search`, { waitUntil: "domcontentloaded" });
+  // Let the engine finish booting first, or it overwrites the value we plant.
+  await page.waitForSelector(tip, { timeout: 15000 });
+  await page.evaluate(() =>
+    localStorage.setItem(
+      "harbor_tutorial",
+      JSON.stringify({ slug: "first-gate-release", index: 2 }),
+    ),
+  );
+  await page.goto(`${BASE}/search`, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector(tip, { timeout: 15000 });
+  const healed = await page.textContent(tip);
+  check(
+    "recovers when a click step's advance was lost",
+    healed?.includes("Step 4 of") ?? false,
+    healed?.match(/Step \d+ of \d+/)?.[0],
+  );
+
   // Back to a clean run from the top.
   await page.evaluate(() => localStorage.clear());
   await page.goto(`${BASE}/api/auth-reset`, { waitUntil: "domcontentloaded" }).catch(() => {});

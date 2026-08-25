@@ -87,6 +87,16 @@ export function useTutorialState() {
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  // Mirror the index in a ref so advancing never has to read it from inside a
+  // state updater. Click steps often navigate, and if the engine unmounts
+  // before React runs the updater the save is simply lost — leaving the next
+  // page resuming at the previous step.
+  const indexRef = useRef(index);
+  useEffect(() => {
+    indexRef.current = index;
+  }, [index]);
+
+
   const start = useCallback(async (slug: string, resumeAt?: number) => {
     setLoading(true);
     try {
@@ -107,6 +117,7 @@ export function useTutorialState() {
       }
       setTutorial(data);
       setIndex(at);
+      indexRef.current = at;
       writeState({ slug, index: at });
     } catch {
       setTutorial(null);
@@ -139,17 +150,21 @@ export function useTutorialState() {
   );
 
   const advance = useCallback(() => {
-    setIndex((i) => {
-      const next = i + 1;
-      if (tutorial) persist(tutorial.slug, next, tutorial.steps.length);
-      return next;
-    });
+    if (!tutorial) return;
+    const next = indexRef.current + 1;
+    indexRef.current = next;
+    setIndex(next);
+    // Synchronous, outside the updater: localStorage is written before the
+    // browser starts navigating away.
+    persist(tutorial.slug, next, tutorial.steps.length);
   }, [tutorial, persist]);
 
   const goTo = useCallback(
     (n: number) => {
+      if (!tutorial) return;
+      indexRef.current = n;
       setIndex(n);
-      if (tutorial) persist(tutorial.slug, n, tutorial.steps.length);
+      persist(tutorial.slug, n, tutorial.steps.length);
     },
     [tutorial, persist],
   );
@@ -157,6 +172,7 @@ export function useTutorialState() {
   const exit = useCallback(() => {
     setTutorial(null);
     setIndex(0);
+    indexRef.current = 0;
     writeState(null);
   }, []);
 

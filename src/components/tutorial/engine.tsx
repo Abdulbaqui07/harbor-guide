@@ -33,6 +33,14 @@ function useCurrentPage() {
   return page;
 }
 
+/** Advances once, on mount, when we detect the step was already completed. */
+function RecoverStep({ onRecover }: { onRecover: () => void }) {
+  useEffect(() => {
+    onRecover();
+  }, [onRecover]);
+  return null;
+}
+
 export default function TutorialEngine() {
   const params = useSearchParams();
   const { tutorial, index, start, advance, goTo, exit } = useTutorialState();
@@ -161,6 +169,17 @@ export default function TutorialEngine() {
   }
 
   if (!step) return null;
+
+  // ---- Self-heal: the click navigated but the advance was lost -------------
+  // If we're sitting on the page the NEXT step belongs to, the current step
+  // has effectively been completed — recover rather than stranding the user
+  // on an off-track card whose only real option is Exit.
+  if (!onThisPage && currentPage) {
+    const next = tutorial.steps[index + 1];
+    if (next && next.page === currentPage && step.action === "click") {
+      return <RecoverStep onRecover={advance} />;
+    }
+  }
 
   // ---- User wandered off the step's page -----------------------------------
   if (!onThisPage) {
