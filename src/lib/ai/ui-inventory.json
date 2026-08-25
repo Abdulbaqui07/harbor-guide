@@ -146,6 +146,24 @@
         "tag": "button",
         "text": "Sign out",
         "conditional": false
+      },
+      {
+        "id": "requests-empty",
+        "tag": "section",
+        "text": "",
+        "conditional": true
+      },
+      {
+        "id": "requests-find-container",
+        "tag": "a",
+        "text": "Find a container",
+        "conditional": true
+      },
+      {
+        "id": "requests-list",
+        "tag": "ul",
+        "text": "",
+        "conditional": true
       }
     ]
   },

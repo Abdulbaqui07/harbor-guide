@@ -194,6 +194,21 @@ try {
       !empty.some((e) => e.id === "search-results"),
   );
 
+  // The generation endpoint spends money per call, so it must refuse anonymous
+  // callers. A regression here is a bill, not just a bug.
+  // Plain fetch, not page.context().request - the latter shares the browser's
+  // cookies and would authenticate, actually spending money on a real call.
+  const anon = await fetch(`${BASE}/api/tutorials/generate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ goal: "Anonymous caller should never reach the model." }),
+  });
+  check(
+    "generation refuses callers without a session",
+    anon.status === 401,
+    `HTTP ${anon.status}`,
+  );
+
   // 9. Held container blocks the CTA
   await page.goto(`${BASE}/containers/HLXU3388216`, { waitUntil: "domcontentloaded" });
   const held = await snapshot(page, "container-held");

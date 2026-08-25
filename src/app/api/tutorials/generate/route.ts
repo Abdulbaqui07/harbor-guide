@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { generateTutorial } from "@/lib/ai/generate";
 import { saveGeneratedTutorial } from "@/lib/tutorials";
+import { getSession } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
@@ -33,6 +34,12 @@ function rateLimited() {
 }
 
 export async function POST(req: Request) {
+  // Every call spends money, so require a signed-in user. Without this the
+  // endpoint is a public spend button on a public URL.
+  if (!(await getSession())) {
+    return NextResponse.json({ error: "Sign in to generate." }, { status: 401 });
+  }
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
       { error: "Generation is not configured on this deployment." },
