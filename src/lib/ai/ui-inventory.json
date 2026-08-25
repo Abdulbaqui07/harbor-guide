@@ -1,0 +1,374 @@
+{
+  "login": {
+    "url": "http://localhost:3210/login",
+    "elements": [
+      {
+        "id": "login-form",
+        "tag": "form",
+        "text": "EmailPasswordSign in",
+        "conditional": false
+      },
+      {
+        "id": "login-email",
+        "tag": "input",
+        "text": "",
+        "conditional": false
+      },
+      {
+        "id": "login-password",
+        "tag": "input",
+        "text": "",
+        "conditional": false
+      },
+      {
+        "id": "login-submit",
+        "tag": "button",
+        "text": "Sign in",
+        "conditional": false
+      }
+    ]
+  },
+  "dashboard": {
+    "url": "http://localhost:3210/dashboard",
+    "elements": [
+      {
+        "id": "portal-header",
+        "tag": "header",
+        "text": "HHarborDashboardContainersRequestsShow me howYard Operatorop",
+        "conditional": false
+      },
+      {
+        "id": "nav-dashboard",
+        "tag": "a",
+        "text": "Dashboard",
+        "conditional": false
+      },
+      {
+        "id": "nav-search",
+        "tag": "a",
+        "text": "Containers",
+        "conditional": false
+      },
+      {
+        "id": "nav-requests",
+        "tag": "a",
+        "text": "Requests",
+        "conditional": false
+      },
+      {
+        "id": "logout",
+        "tag": "button",
+        "text": "Sign out",
+        "conditional": false
+      },
+      {
+        "id": "kpi-row",
+        "tag": "div",
+        "text": "In the yard12Ready to collect3On hold2Free time expiring4",
+        "conditional": false
+      },
+      {
+        "id": "kpi-total",
+        "tag": "section",
+        "text": "In the yard12",
+        "conditional": false
+      },
+      {
+        "id": "kpi-ready",
+        "tag": "section",
+        "text": "Ready to collect3",
+        "conditional": false
+      },
+      {
+        "id": "kpi-hold",
+        "tag": "section",
+        "text": "On hold2",
+        "conditional": false
+      },
+      {
+        "id": "kpi-expiring",
+        "tag": "section",
+        "text": "Free time expiring4",
+        "conditional": false
+      },
+      {
+        "id": "ready-panel",
+        "tag": "section",
+        "text": "Ready to collectView allMSKU748291340HC3d free timeGate Out ",
+        "conditional": false
+      },
+      {
+        "id": "ready-view-all",
+        "tag": "a",
+        "text": "View all",
+        "conditional": false
+      },
+      {
+        "id": "requests-panel",
+        "tag": "section",
+        "text": "Your recent requestsMSKU7482913Gate ReleaseSubmittedMSKU7482",
+        "conditional": false
+      },
+      {
+        "id": "dashboard-find-container",
+        "tag": "a",
+        "text": "Find a container",
+        "conditional": false
+      }
+    ]
+  },
+  "search": {
+    "url": "http://localhost:3210/search?q=MSKU7482913&status=all&line=all",
+    "elements": [
+      {
+        "id": "portal-header",
+        "tag": "header",
+        "text": "HHarborDashboardContainersRequestsShow me howYard Operatorop",
+        "conditional": false
+      },
+      {
+        "id": "nav-dashboard",
+        "tag": "a",
+        "text": "Dashboard",
+        "conditional": false
+      },
+      {
+        "id": "nav-search",
+        "tag": "a",
+        "text": "Containers",
+        "conditional": false
+      },
+      {
+        "id": "nav-requests",
+        "tag": "a",
+        "text": "Requests",
+        "conditional": false
+      },
+      {
+        "id": "logout",
+        "tag": "button",
+        "text": "Sign out",
+        "conditional": false
+      },
+      {
+        "id": "search-form",
+        "tag": "form",
+        "text": "SearchStatusAny statusGate Out ReadyIn YardOn HoldDischarged",
+        "conditional": false
+      },
+      {
+        "id": "search-input",
+        "tag": "input",
+        "text": "",
+        "conditional": false
+      },
+      {
+        "id": "search-status",
+        "tag": "select",
+        "text": "Any statusGate Out ReadyIn YardOn HoldDischargedLoaded",
+        "conditional": false
+      },
+      {
+        "id": "search-line",
+        "tag": "select",
+        "text": "Any lineCMA CGMEvergreenHapag-LloydMSCMaerskOOCL",
+        "conditional": false
+      },
+      {
+        "id": "search-submit",
+        "tag": "button",
+        "text": "Search",
+        "conditional": false
+      },
+      {
+        "id": "search-results",
+        "tag": "ul",
+        "text": "MSKU748291340HCMaersk Kowloon · 214WGulf Metals Trading LLCB",
+        "conditional": false
+      },
+      {
+        "id": "result-MSKU7482913",
+        "tag": "a",
+        "text": "MSKU748291340HCMaersk Kowloon · 214WGulf Metals Trading LLCB",
+        "conditional": false
+      }
+    ]
+  },
+  "container-detail": {
+    "url": "http://localhost:3210/containers/HLXU3388216",
+    "elements": [
+      {
+        "id": "portal-header",
+        "tag": "header",
+        "text": "HHarborDashboardContainersRequestsShow me howYard Operatorop",
+        "conditional": false
+      },
+      {
+        "id": "nav-dashboard",
+        "tag": "a",
+        "text": "Dashboard",
+        "conditional": false
+      },
+      {
+        "id": "nav-search",
+        "tag": "a",
+        "text": "Containers",
+        "conditional": false
+      },
+      {
+        "id": "nav-requests",
+        "tag": "a",
+        "text": "Requests",
+        "conditional": false
+      },
+      {
+        "id": "logout",
+        "tag": "button",
+        "text": "Sign out",
+        "conditional": false
+      },
+      {
+        "id": "container-details",
+        "tag": "section",
+        "text": "DetailsISO type40HCShipping lineMaerskVessel / voyageMaersk ",
+        "conditional": false
+      },
+      {
+        "id": "create-request",
+        "tag": "a",
+        "text": "Create request",
+        "conditional": true
+      },
+      {
+        "id": "container-holds",
+        "tag": "section",
+        "text": "2 active holdsThis container can't be released until every h",
+        "conditional": true
+      },
+      {
+        "id": "request-blocked",
+        "tag": "span",
+        "text": "Blocked by holds",
+        "conditional": true
+      }
+    ]
+  },
+  "new-request": {
+    "url": "http://localhost:3210/requests/new?container=MSKU7482913",
+    "elements": [
+      {
+        "id": "portal-header",
+        "tag": "header",
+        "text": "HHarborDashboardContainersRequestsShow me howYard Operatorop",
+        "conditional": false
+      },
+      {
+        "id": "nav-dashboard",
+        "tag": "a",
+        "text": "Dashboard",
+        "conditional": false
+      },
+      {
+        "id": "nav-search",
+        "tag": "a",
+        "text": "Containers",
+        "conditional": false
+      },
+      {
+        "id": "nav-requests",
+        "tag": "a",
+        "text": "Requests",
+        "conditional": false
+      },
+      {
+        "id": "logout",
+        "tag": "button",
+        "text": "Sign out",
+        "conditional": false
+      },
+      {
+        "id": "request-form",
+        "tag": "form",
+        "text": "Request typeGate ReleaseReefer Plug-inCustoms InspectionRewe",
+        "conditional": false
+      },
+      {
+        "id": "request-type",
+        "tag": "select",
+        "text": "Gate ReleaseReefer Plug-inCustoms InspectionReweigh",
+        "conditional": false
+      },
+      {
+        "id": "request-haulier",
+        "tag": "input",
+        "text": "",
+        "conditional": false
+      },
+      {
+        "id": "request-date",
+        "tag": "input",
+        "text": "",
+        "conditional": false
+      },
+      {
+        "id": "request-notes",
+        "tag": "textarea",
+        "text": "",
+        "conditional": false
+      },
+      {
+        "id": "request-submit",
+        "tag": "button",
+        "text": "Submit request",
+        "conditional": false
+      }
+    ]
+  },
+  "request-confirmation": {
+    "url": "http://localhost:3210/requests/REQ-K0MJHA",
+    "elements": [
+      {
+        "id": "portal-header",
+        "tag": "header",
+        "text": "HHarborDashboardContainersRequestsShow me howYard Operatorop",
+        "conditional": false
+      },
+      {
+        "id": "nav-dashboard",
+        "tag": "a",
+        "text": "Dashboard",
+        "conditional": false
+      },
+      {
+        "id": "nav-search",
+        "tag": "a",
+        "text": "Containers",
+        "conditional": false
+      },
+      {
+        "id": "nav-requests",
+        "tag": "a",
+        "text": "Requests",
+        "conditional": false
+      },
+      {
+        "id": "logout",
+        "tag": "button",
+        "text": "Sign out",
+        "conditional": false
+      },
+      {
+        "id": "request-confirmation",
+        "tag": "section",
+        "text": "✓Request submittedThe yard team will review it and update th",
+        "conditional": false
+      },
+      {
+        "id": "back-to-dashboard",
+        "tag": "a",
+        "text": "Back to dashboard",
+        "conditional": false
+      }
+    ]
+  }
+}

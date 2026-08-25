@@ -17,7 +17,29 @@ async function snapshot(page, label) {
       text: (el.textContent ?? "").trim().slice(0, 60),
     })),
   );
-  inventory[label] = { url: page.url(), elements: ids };
+
+  // Key the inventory by the page's REAL data-tutorial-page value, not by the
+  // label this script happens to use. A made-up key looks valid to the
+  // allowlist but can never match at runtime, so a generated step targeting it
+  // would silently stall the tutorial.
+  const key = await page
+    .$eval("[data-tutorial-page]", (el) => el.getAttribute("data-tutorial-page"))
+    .catch(() => null);
+
+  if (key) {
+    // The same page renders different controls depending on state (a held
+    // container hides Create request and shows Blocked by holds instead), so
+    // merge across visits and count how often each element actually appeared.
+    const entry = (inventory[key] ??= { url: page.url(), visits: 0, elements: [] });
+    entry.url = page.url();
+    entry.visits += 1;
+    for (const el of ids) {
+      const found = entry.elements.find((e) => e.id === el.id);
+      if (found) found.seen += 1;
+      else entry.elements.push({ ...el, seen: 1 });
+    }
+  }
+
   return ids;
 }
 
@@ -134,8 +156,18 @@ for (const [label, p] of Object.entries(inventory)) {
   console.log(`  ${label.padEnd(22)} ${p.elements.map((e) => e.id).join(", ")}`);
 }
 
+// An element that did not appear on every visit is state-dependent. Generators
+// must not point at it unless the flow has actually reached that state.
+for (const entry of Object.values(inventory)) {
+  for (const el of entry.elements) {
+    el.conditional = el.seen < entry.visits;
+    delete el.seen;
+  }
+  delete entry.visits;
+}
+
 const { writeFileSync } = await import("node:fs");
-writeFileSync("scripts/ui-inventory.json", JSON.stringify(inventory, null, 2));
-console.log("\nWrote scripts/ui-inventory.json");
+writeFileSync("src/lib/ai/ui-inventory.json", JSON.stringify(inventory, null, 2));
+console.log("\nWrote src/lib/ai/ui-inventory.json");
 
 process.exit(failed.length ? 1 : 0);

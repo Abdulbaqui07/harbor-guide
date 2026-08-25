@@ -26,7 +26,7 @@ const milestones = [
   { label: "Portal flow", done: true },
   { label: "Tutorial engine", done: true },
   { label: "Search discovery", done: true },
-  { label: "AI step authoring", done: false },
+  { label: "AI step authoring", done: true },
 ];
 
 export default function Home() {

@@ -58,6 +58,12 @@ export default async function GuideHome() {
         >
           Skip to the portal
         </Link>
+        <Link
+          href="/guide/authoring"
+          className="rounded-lg border border-border px-6 py-3 text-sm transition-colors hover:border-accent"
+        >
+          Author one with AI
+        </Link>
       </div>
 
       {tutorials.length > 0 && (

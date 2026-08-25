@@ -118,3 +118,45 @@ export async function getProgress(userKey: string, slug: string) {
   `) as { current_step: number; completed_at: string | null }[];
   return rows[0] ?? null;
 }
+
+export async function saveGeneratedTutorial(input: {
+  slug: string;
+  title: string;
+  description: string;
+  steps: {
+    page: string;
+    targetId: string;
+    title: string;
+    message: string;
+    action: string;
+    expectedValue: string | null;
+  }[];
+}) {
+  const id = `tut_${input.slug.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`;
+
+  await sql`
+    insert into tutorials (id, slug, title, description, source, status, version)
+    values (${id}, ${input.slug}, ${input.title}, ${input.description},
+            'ai', 'published', 1)
+    on conflict (id) do update set
+      title = excluded.title,
+      description = excluded.description,
+      version = tutorials.version + 1
+  `;
+
+  await sql`delete from tutorial_steps where tutorial_id = ${id}`;
+
+  let seq = 1;
+  for (const s of input.steps) {
+    await sql`
+      insert into tutorial_steps
+        (tutorial_id, sequence, page, target_id, title, message, action, expected_value)
+      values
+        (${id}, ${seq}, ${s.page}, ${s.targetId}, ${s.title}, ${s.message},
+         ${s.action}, ${s.expectedValue})
+    `;
+    seq++;
+  }
+
+  return { id, slug: input.slug, stepCount: input.steps.length };
+}
