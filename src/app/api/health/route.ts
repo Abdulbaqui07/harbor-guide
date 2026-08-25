@@ -6,8 +6,8 @@ export function GET() {
   return NextResponse.json({
     status: "ok",
     service: "harbor",
-    commit: process.env.VERCEL_GIT_COMMIT_SHA ?? "local",
-    env: process.env.VERCEL_ENV ?? "development",
+    commit: process.env.VERCEL_GIT_COMMIT_SHA || "unlinked",
+    env: process.env.VERCEL_ENV || "development",
     time: new Date().toISOString(),
   });
 }
