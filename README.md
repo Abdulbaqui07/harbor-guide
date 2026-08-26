@@ -1,7 +1,7 @@
 # Harbor
 
-Two applications on one deployment: a working container-terminal portal, and a
-tutorial platform that teaches a first-time user how to find it and use it.
+One application: a container-terminal portal with onboarding built into it, so
+a first-time user can find it in a browser and learn it without help.
 
 **Live: https://harbor-guide.vercel.app**
 
@@ -10,6 +10,10 @@ Demo account - `operator@harbor.dev` / `harbor123`
 ---
 
 ## The two halves
+
+They are two parts of one deployment, not two products. The onboarding layer has
+to run inside the portal - same-origin policy means nothing at another origin can
+read the portal's DOM to highlight it.
 
 **Harbor Terminal Portal** (`src/app/(portal)`) is the product. Hauliers sign
 in, scan the yard, search for a container, check its holds and remaining free

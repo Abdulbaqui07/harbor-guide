@@ -3,7 +3,7 @@ import Link from "next/link";
 const apps = [
   {
     href: "/login",
-    eyebrow: "Application 1",
+    eyebrow: "The product",
     title: "Harbor Terminal Portal",
     body: "The hosted product. Sign in, scan the yard dashboard, search a container, open its details, and raise a gate-release request.",
     flow: ["Login", "Dashboard", "Search", "Result", "Request", "Submitted"],
@@ -12,8 +12,8 @@ const apps = [
   },
   {
     href: "/guide",
-    eyebrow: "Application 2",
-    title: "Harbor Guide",
+    eyebrow: "Built-in onboarding",
+    title: "Guided onboarding",
     body: "The tutorial platform. It walks a brand-new user from a browser search all the way through their first completed request, highlighting each control as they go.",
     flow: ["Discover", "Search results", "Land", "Guided steps", "Verified"],
     cta: "Start the walkthrough",
@@ -37,12 +37,12 @@ export default function Home() {
           Harbor
         </p>
         <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-          A product, and something that teaches you to use it.
+          One application that teaches you to use it.
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted">
-          Two applications on one deployment. A working container-terminal portal,
-          and a tutorial platform that takes a first-time user from a browser
-          search result to a completed request without anyone sitting next to them.
+          A working container-terminal portal with onboarding built into it, so a
+          first-time user gets from a browser search result to a completed
+          request without anyone sitting next to them.
         </p>
       </header>
 
