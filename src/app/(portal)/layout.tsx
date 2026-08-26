@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getSession } from "@/lib/session";
+import AssistantPanel from "@/components/assistant/panel";
 import HelpButton from "@/components/tutorial/help-button";
 import { logoutAction } from "./actions";
 
@@ -73,6 +74,8 @@ export default async function PortalLayout({
       )}
 
       <div className="flex flex-1 flex-col">{children}</div>
+
+      {session && <AssistantPanel />}
     </div>
   );
 }

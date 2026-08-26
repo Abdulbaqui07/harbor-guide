@@ -93,6 +93,24 @@ reaching its state.
 Static validation is necessary and not sufficient. That is the argument for
 evals.
 
+## The in-app assistant
+
+Signed-in users get an **Ask about this screen** panel. It answers from the same
+element inventory the tutorial generator uses, plus the published tutorial list,
+so it can only talk about controls that genuinely exist.
+
+Its structured reply carries three fields: the answer, optionally a
+`targetId` to spotlight, and optionally a `tutorialSlug` to run. Both are checked
+against the allowlist before the UI acts on them - a suggestion the app cannot
+carry out is worse than no suggestion. Asking "why can't I collect this
+container?" on a held container returns the answer, highlights the holds panel,
+and offers the tutorial that covers it.
+
+It runs on `claude-sonnet-5` at roughly $0.008 a question, against
+`claude-opus-5` for tutorial authoring where output is long and quality matters
+more than latency. Both endpoints require a session: they spend money per call,
+and an ungated one on a public URL is a spend button.
+
 ## Running it
 
 ```bash

@@ -27,6 +27,7 @@ const milestones = [
   { label: "Tutorial engine", done: true },
   { label: "Search discovery", done: true },
   { label: "AI step authoring", done: true },
+  { label: "In-app assistant", done: true },
 ];
 
 export default function Home() {

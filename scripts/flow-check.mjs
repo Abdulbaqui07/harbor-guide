@@ -209,6 +209,17 @@ try {
     `HTTP ${anon.status}`,
   );
 
+  const anonAsk = await fetch(`${BASE}/api/assistant`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question: "Anonymous caller should be refused.", page: "dashboard" }),
+  });
+  check(
+    "the assistant refuses callers without a session",
+    anonAsk.status === 401,
+    `HTTP ${anonAsk.status}`,
+  );
+
   // 9. Held container blocks the CTA
   await page.goto(`${BASE}/containers/HLXU3388216`, { waitUntil: "domcontentloaded" });
   const held = await snapshot(page, "container-held");
