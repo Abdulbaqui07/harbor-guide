@@ -49,16 +49,23 @@ tutorial survives navigation and reloads.
 
 Rewording a step, reordering, or adding one is an `UPDATE`. No deploy.
 
-## The discovery step
+## The discovery step, and the extension
 
 `/guide/search` reproduces a search-results page with the portal among
 plausible competitors, dims the rest, and teaches the habit of checking the
 address bar before signing in anywhere.
 
-It is a **simulation, and the page says so**. Same-origin policy means no web
-page can reach into a real search engine's results and highlight anything.
-Doing it for real requires a browser extension holding an explicit permission
-for that site. The constraint is worth stating rather than faking past.
+That page is a recreation, and it says so. Same-origin policy means no web page
+can reach into a real search engine's results and highlight anything - or any
+site could rewrite what a search looks like.
+
+For the real thing, `extension/` holds a Manifest V3 Chrome extension that finds
+the configured domain among genuine Google, Bing or DuckDuckGo results, rings it,
+dims the rest, and adds the same note. It requests `storage` and those three
+hosts and nothing else: no `tabs`, no `<all_urls>`, no background worker, no
+network access. `extension/README.md` covers loading it, and
+`npm run extension-check` drives it against the markup each engine actually
+emits.
 
 ## AI authoring
 
@@ -133,6 +140,7 @@ npm run dev
 npm run flow-check       # portal journey, 10 assertions
 npm run tutorial-check   # engine behaviour, 10 assertions
 npm run eval -- <slug>   # static + dynamic check of one tutorial
+npm run extension-check  # the search-result extension, all three engines
 npm run db:reset-demo    # clear requests and progress before a demo
 ```
 
@@ -153,6 +161,7 @@ service split and an observability stack are all defensible *later*, and all
 would be cargo cult *now* - see the design notes for where each would earn its
 place.
 
-The one component genuinely missing is the **browser extension** for the
-discovery step. It is the only honest way to highlight a result inside a real
-search engine, and it is a separate build with its own permission model.
+The browser extension for the discovery step is no longer missing - it is in
+`extension/`. What is still absent by choice: real user management and RBAC,
+any downstream workflow once a request is submitted, and observability. Each is
+defensible later and would be cargo cult now.

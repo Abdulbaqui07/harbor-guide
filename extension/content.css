@@ -1,0 +1,68 @@
+.harbor-hit {
+  position: relative;
+  /* Keep the ring inside the block's own box. An outline-offset large enough
+     to look generous overlaps whatever result sits above it. */
+  outline: 3px solid #0f6fff !important;
+  outline-offset: 2px;
+  border-radius: 10px;
+  background: rgba(15, 111, 255, 0.06) !important;
+  padding: 10px 12px !important;
+  margin: 14px 0 !important;
+  animation: harbor-pulse 1.6s ease-out 2;
+}
+
+@keyframes harbor-pulse {
+  0%   { outline-color: #0f6fff; }
+  50%  { outline-color: rgba(15, 111, 255, 0.25); }
+  100% { outline-color: #0f6fff; }
+}
+
+.harbor-dim {
+  opacity: 0.32 !important;
+  filter: saturate(0.4);
+  transition: opacity 300ms ease;
+}
+
+.harbor-badge {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 22px 0 18px;
+  padding: 12px 14px;
+  border: 1px solid rgba(15, 111, 255, 0.45);
+  border-radius: 10px;
+  background: rgba(15, 111, 255, 0.07);
+  font: 13px/1.5 system-ui, -apple-system, sans-serif;
+  color: #10151c;
+  max-width: 620px;
+}
+
+.harbor-badge-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: #0f6fff;
+}
+
+.harbor-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147483647;
+  padding: 11px 15px;
+  border-radius: 10px;
+  background: #10151c;
+  color: #fff;
+  font: 13px/1.4 system-ui, -apple-system, sans-serif;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  .harbor-badge {
+    background: rgba(77, 148, 255, 0.12);
+    border-color: rgba(77, 148, 255, 0.5);
+    color: #e8edf4;
+  }
+}

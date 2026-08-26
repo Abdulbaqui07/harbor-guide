@@ -21,14 +21,6 @@ const apps = [
   },
 ];
 
-const milestones = [
-  { label: "Scaffold & hosting", done: true },
-  { label: "Portal flow", done: true },
-  { label: "Tutorial engine", done: true },
-  { label: "Search discovery", done: true },
-  { label: "AI step authoring", done: true },
-  { label: "In-app assistant", done: true },
-];
 
 export default function Home() {
   return (
@@ -87,20 +79,17 @@ export default function Home() {
       </div>
 
       <section className="mt-14 rounded-xl border border-border bg-surface p-6">
-        <h2 className="text-sm font-semibold">Build progress</h2>
-        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
-          {milestones.map((m) => (
-            <li key={m.label} className="flex items-center gap-2 text-sm">
-              <span
-                aria-hidden
-                className={`size-1.5 rounded-full ${m.done ? "bg-ok" : "bg-border"}`}
-              />
-              <span className={m.done ? "text-foreground" : "text-muted"}>
-                {m.label}
-              </span>
-            </li>
-          ))}
-        </ul>
+        <h2 className="text-sm font-semibold">Where the AI is</h2>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+          Two places, both behind the demo sign-in. The onboarding steps can be
+          written by Claude from a plain-English goal, and every screen has an
+          assistant that answers questions about the controls actually in front
+          of you. Sign in with the credentials shown on the login page.
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-muted">
+          Discovery in a real browser is handled by a Chrome extension in{" "}
+          <span className="font-mono text-foreground">extension/</span>.
+        </p>
       </section>
 
       <footer className="mt-10 font-mono text-xs text-muted">

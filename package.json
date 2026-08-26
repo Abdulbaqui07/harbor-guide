@@ -13,7 +13,8 @@
     "db:seed": "node db/seed.mjs && node db/seed-tutorial.mjs",
     "db:reset-demo": "node db/reset-demo.mjs",
     "eval": "node scripts/eval-tutorial.mjs",
-    "db:sanitize": "node db/sanitize.mjs"
+    "db:sanitize": "node db/sanitize.mjs",
+    "extension-check": "node extension/test/run.mjs"
   },
   "dependencies": {
     "@langchain/anthropic": "^1.5.8",

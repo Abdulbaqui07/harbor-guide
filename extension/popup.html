@@ -1,0 +1,62 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Harbor Finder</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    width: 268px;
+    margin: 0;
+    padding: 16px;
+    font: 13px/1.5 system-ui, -apple-system, sans-serif;
+    background: Canvas;
+    color: CanvasText;
+  }
+  h1 { margin: 0 0 2px; font-size: 14px; }
+  p.sub { margin: 0 0 14px; opacity: 0.65; font-size: 12px; }
+  label { display: block; margin-bottom: 5px; font-weight: 500; }
+  input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 7px 9px;
+    border: 1px solid rgba(128, 128, 128, 0.45);
+    border-radius: 7px;
+    background: Canvas;
+    color: CanvasText;
+    font: inherit;
+  }
+  .row { display: flex; align-items: center; gap: 8px; margin: 13px 0; }
+  button {
+    width: 100%;
+    padding: 8px;
+    border: 0;
+    border-radius: 7px;
+    background: #0f6fff;
+    color: #fff;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .saved { margin: 9px 0 0; color: #0e9f6e; font-size: 12px; min-height: 16px; }
+  .note { margin: 14px 0 0; font-size: 11px; opacity: 0.6; }
+</style>
+
+<h1>Harbor Finder</h1>
+<p class="sub">Highlights your portal in search results.</p>
+
+<label for="domain">Domain to find</label>
+<input id="domain" type="text" spellcheck="false" placeholder="harbor-guide.vercel.app" />
+
+<div class="row">
+  <input id="enabled" type="checkbox" />
+  <label for="enabled" style="margin: 0; font-weight: 400">Enabled</label>
+</div>
+
+<button id="save">Save</button>
+<p class="saved" id="saved"></p>
+
+<p class="note">
+  Runs only on Google, Bing and DuckDuckGo result pages. No other site, no
+  browsing history, no network access.
+</p>
+
+<script src="popup.js"></script>

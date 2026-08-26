@@ -174,16 +174,23 @@ export default function SerpSimulation() {
         </Link>
       </div>
 
-      <p className="mt-8 max-w-2xl text-xs leading-relaxed text-muted">
-        <strong className="font-semibold text-foreground">
-          Why this is a simulation.
-        </strong>{" "}
-        A web page cannot reach into a real search engine&apos;s results and
-        highlight anything - the browser&apos;s same-origin policy forbids it,
-        and rightly so. Doing it for real needs a browser extension with explicit
-        permission for that site. This reproduces the moment faithfully so the
-        discovery step can be taught without one.
-      </p>
+      <div className="mt-8 max-w-2xl rounded-xl border border-border bg-surface p-5">
+        <p className="text-sm font-semibold">This also works on real search results</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          A web page cannot reach into a search engine&apos;s results and
+          highlight anything - the browser&apos;s same-origin policy forbids it,
+          and rightly so, or any site could rewrite what a search looks like.
+          Doing it for real needs code running with an explicit permission for
+          that host, which means a browser extension.
+        </p>
+        <p className="mt-2.5 text-sm leading-relaxed text-muted">
+          There is one in{" "}
+          <span className="font-mono text-foreground">extension/</span> in the
+          repository. Load it unpacked in Chrome and search normally: the portal
+          gets ringed, the other results dim, and the same note appears. The
+          panel above recreates the moment for anyone who has not installed it.
+        </p>
+      </div>
 
       <p className="mt-8">
         <Link href="/guide" className="text-sm text-muted hover:text-accent">
