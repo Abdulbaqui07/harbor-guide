@@ -48,22 +48,38 @@ export default function TutorialEngine() {
   const [valid, setValid] = useState(false);
   const [nudge, setNudge] = useState(0);
   const booted = useRef(false);
+  const handledParam = useRef<string | null>(null);
 
-  // Boot from ?tutorial=slug, otherwise resume whatever was stored.
+  // Start from ?tutorial=slug, otherwise resume whatever was stored.
+  //
+  // This has to react to the parameter arriving, not just to mounting. The
+  // engine sits in the root layout, so an in-app link into /login?tutorial=...
+  // is a client-side navigation that never remounts it - booting once meant
+  // the parameter was silently ignored on exactly the path a user follows from
+  // the discovery page.
+  const fromUrl = params.get("tutorial");
   useEffect(() => {
-    if (booted.current) return;
-    booted.current = true;
-
-    const fromUrl = params.get("tutorial");
-    const stored = readState();
-
     if (fromUrl) {
+      // Handle each parameter value once, or exiting would restart the
+      // tutorial immediately while the URL still carries the slug.
+      if (handledParam.current === fromUrl) return;
+      handledParam.current = fromUrl;
+      // Mark the resume path done too. Once the parameter is dropped from the
+      // URL - the redirect after sign-in does exactly that - this effect reruns,
+      // and a second start() would re-fetch and reset the index, undoing an
+      // advance that had already happened.
+      booted.current = true;
+      const stored = readState();
       // undefined (not 0) so a fresh run picks the step for this page.
       void start(fromUrl, stored?.slug === fromUrl ? stored.index : undefined);
-    } else if (stored) {
-      void start(stored.slug, stored.index);
+      return;
     }
-  }, [params, start]);
+
+    if (booted.current || tutorial) return;
+    booted.current = true;
+    const stored = readState();
+    if (stored) void start(stored.slug, stored.index);
+  }, [fromUrl, start, tutorial]);
 
   // Any "Show me how" button on the page can launch a tutorial.
   useEffect(() => {

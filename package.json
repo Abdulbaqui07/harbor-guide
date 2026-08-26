@@ -14,7 +14,8 @@
     "db:reset-demo": "node db/reset-demo.mjs",
     "eval": "node scripts/eval-tutorial.mjs",
     "db:sanitize": "node db/sanitize.mjs",
-    "extension-check": "node extension/test/run.mjs"
+    "extension-check": "node extension/test/run.mjs",
+    "record-demo": "node scripts/demo/record.mjs"
   },
   "dependencies": {
     "@langchain/anthropic": "^1.5.8",

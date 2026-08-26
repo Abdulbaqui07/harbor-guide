@@ -95,6 +95,22 @@ try {
     healed?.match(/Step \d+ of \d+/)?.[0],
   );
 
+  // The path a real user takes from the discovery page: an in-app link, which
+  // is a client-side navigation rather than a page load. The engine lives in
+  // the root layout and does not remount, so it has to react to the parameter
+  // arriving rather than only reading it once on mount.
+  await page.context().clearCookies();
+  await page.evaluate(() => localStorage.clear()).catch(() => {});
+  await page.goto(`${BASE}/guide/search`, { waitUntil: "networkidle" });
+  await page.waitForTimeout(2600);
+  await page.click("text=Open the portal and start the walkthrough");
+  await page.waitForURL("**/login**", { timeout: 20000 });
+  const viaLink = await page
+    .waitForSelector(`${tip}:has-text("Step 1 of")`, { timeout: 15000 })
+    .then(() => true)
+    .catch(() => false);
+  check("an in-app link into the tutorial starts it", viaLink);
+
   // Back to a clean run from the top.
   await page.evaluate(() => localStorage.clear());
   await page.goto(`${BASE}/api/auth-reset`, { waitUntil: "domcontentloaded" }).catch(() => {});
